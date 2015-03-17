@@ -45,3 +45,95 @@ value = "<script>alert(1);</script>"
 ```text
 <script>alert(1);</script>
 ```
+
+
+
+
+### html转义
+
+为什么要转义
+
+* 为了能让`html解释器`可以解析出正确的页面
+* 就像在字符串中不可以直接输入`"`而得输入`\"`（不然字符串就断开了）,在html中也得转义部分字符：
+    * `\` `&#39;`
+    * `"` `&#34;`
+    * `<` `&lt;`
+    * `>` `&gt;`
+    * `&` `&amp;`
+
+
+例：要输出一个`</p>`字符串到页面,那html就会是：
+
+* `<p></p></p>`显然是不行的
+* `<p>&lt;/p&gt;</p>` 这样才是正确的
+
+
+
+
+### script标签
+
+在script标签中，都是js代码，浏览器不会把他们当做html代码解析，所以不需要`html转义`
+
+script标签从`<script>`标签开始，一直到`</script>`标签截止，所以需要注意：
+
+
+```html
+<script>
+···
+var a='</script>'; //到`>`这里script标签就截止了！！！
+···
+</script>
+```
+
+
+
+
+```html
+<script>
+···
+var a='<\/script>'; //这样就正确
+···
+</script>
+```
+
+
+#### 如何把数据打到script里：
+
+```html
+<script>
+···
+var a={{a|jsonify}};
+// 将会变成以下
+var a="<\/script>"; // 字符串里的 ' " / \ 字符都会被自动转义处理
+var a=null;
+var a={a:1};
+···
+</script>
+```
+
+jsonify规则：
+
+* None    null
+* "str"   "str"
+* True    true
+* 1       1
+* map     JSON
+
+
+错误的方法：
+
+```html
+<script>
+···
+var a="{{a}}";
+// 将会变成以下
+var a="h&amp;m" //原来的数据是 h&m
+
+
+var a="{{a|safe}}";
+// 将会变成以下
+var a="</script>" //被截断
+var a="</script><script>alert(1);</script>" //被注入
+···
+</script>
+```
