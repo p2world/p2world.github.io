@@ -111,6 +111,8 @@ var a={a:1};
 </script>
 ```
 
+   注：某些json库没有做`</script>`转为`<\/script>`，请自行replace或替换为其他库
+
 jsonify规则：
 
 * None    null
