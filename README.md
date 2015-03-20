@@ -161,3 +161,35 @@ var a="</script><script>alert(1);</script>" //被注入
 ···
 </script>
 ```
+
+## js
+
+### 写入：
+只有涉及到操作`html`的时候才会有xss的问题：
+
+* html(html)
+* append(html)
+* ...
+
+
+这些情况需要转义或者使用`.text(text)`方法替代。
+
+`.text('<>')`是不需要转义的，因为不是设置`html`所以不需要`html解析器`解析，修改属性（`.prop('src',src)`）也一样
+
+### 读取：
+
+```html
+    <div id="d" data-text="&amp;">&lt;</div>
+```
+
+```javascript
+$('#d').text(); // "<"
+$('#d').html(); // "&lt;" 
+
+$('#d').data('text'); // "&"
+
+```
+
+
+
+
