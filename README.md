@@ -67,7 +67,29 @@ value = "<script>alert(1);</script>"
 * `<p></p></p>`显然是不行的
 * `<p>&lt;/p&gt;</p>` 这样才是正确的
 
+### 什么应该不转义
 
+```html
+<div>
+    <%=html%>
+</div>
+```
+
+* 由运营同学或者用户提交的富文本 
+    * `<b>xxx</b>`，`<a href="xx">xxx</a>`
+    * 数据被过滤过（标签，onclick）
+    * 可以相信的
+
+
+
+### 什么应该转移（剩下的全部情况）
+
+```html
+<img src="<%-src%>">
+<div>
+    <%-text%>
+</div>
+```
 
 
 ### script标签
