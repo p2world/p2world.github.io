@@ -192,4 +192,32 @@ $('#d').data('text'); // "&"
 
 
 
+## Tips
 
+### `javascript` 转义代码
+
+```javacript
+function e(str){
+    if(str==null){
+        return '';
+    }
+    str+='';
+    var nStr='';
+    for (var i = 0; i < str.length; i++) {
+        var c=str[i];
+        switch(c){
+            case '\'':nStr+='&#39;';break;
+            case '"':nStr+='&#34;';break;
+            case '<':nStr+='&lt;';break;
+            case '>':nStr+='&gt;';break;
+            case '&':nStr+='&amp;';break;
+            default: nStr+=c;break;
+        }
+    }
+    return nStr;
+};
+```
+
+### 换行符
+
+* 把`\n`替换为`<br/>` `<%=e(text).replace(/\n/g,"<br/>")%>`
