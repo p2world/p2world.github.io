@@ -1,6 +1,4 @@
-
-
-`vali`的单元是`Html-Element`
+## `vali`的单元是`Html-Element`
 
 ```javascript
 // 最简单的例子：
@@ -28,7 +26,7 @@ $('#submit').click(function(){
 
 
 
-除了验证以外 还支持数据收集
+## 除了验证以外 还支持数据收集
 
 ```javascript
 
@@ -71,7 +69,7 @@ $('#submit').click(function(){
 
 
 
-require : 是否必填
+## require : 是否必填
 
 * `null`
 	* 直接执行`vali_func`
@@ -87,3 +85,21 @@ require : 是否必填
 		直接返回成功 不执行`vali_func`
 	* 有值
 		执行`vali_func`
+
+
+## jmsg : 展示单个元素err信息的元素
+
+## effect：单个元素验证完成后的err信息的处理函数
+
+```javascript
+// 默认：
+var effect=function(msg){
+    if(msg){
+        this.addClass('error');
+        this.data('vali_jmsg').html(msg);
+    }else{
+        this.removeClass('error');
+        this.data('vali_jmsg').html('');
+    }
+};
+```
