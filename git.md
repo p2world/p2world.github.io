@@ -123,3 +123,36 @@ git rebase origin/master
 * review获得+2后，可以点击submit，将本次commit加到远程master
 
 ## git config
+
+全局conf文件是`~/.gitconfig`，常用设置：
+
+* 简写
+
+```
+[alias]
+    co = checkout
+    br = branch
+    ci = commit
+    st = status
+```
+
+* git push 的时候只同步当前分支
+
+```
+[push]
+    default = simple
+```
+
+* 将入库文件的换行符统一成`\n`
+
+```
+[core]
+    autocrlf = input
+```
+
+* 记住https的密码
+
+```
+[credential]
+    helper = store
+```
