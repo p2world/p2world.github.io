@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta charset="utf-8">
+
+
+	<title>wheei - template with javascript embed template</title>
+	<link rel="stylesheet" type="text/css" href="./cerulean.bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.2.0/styles/arduino-light.min.css">
+	<link rel="stylesheet" type="text/css" href="./styles.css">
+	<style type="text/css">
+.hljs{
+	background: transparent;
+}
+.compare_lang{
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+}
+
+.compare_lang>code{
+	-webkit-box-flex:1;
+    -webkit-flex:1;
+        -ms-flex:1;
+            flex:1;
+}
+.compare_lang>code:last-child{
+	border-left: 1px dashed #ccc;
+}
+	</style>
+</head>
+<body>
+<div class="site container-fluid">
+	<div class="row-fluid side-row">
+		<div class="span4 compiler">
+		<div class="compiler-box">
+		<div id="compiler-close-button">&times;</div>
+		<div class="github-buttons">
+		<iframe src="http://ghbtns.com/github-btn.html?user=p2world&repo=wheei&type=watch&count=true" allowtransparency="true" frameborder="0" scrolling="0" width="120px" height="20px"></iframe>
+		<i class="icon-resize-full action-compiler-fullscreen" title="Toggle fullscreen"></i>
+		</div>
+		<textarea placeholder="Enter template here" id="tpl_text"></textarea>
+		<div class="actions">
+		<button class="btn btn-primary" data-action="compile" title="Convert template to javascript">Compile</button>
+		<button class="btn" data-action="render" title="Render template">Render</button>
+		</div>
+		</div>
+		<div class="compiler-output"></div>
+	</div>
+	<div class="row-fluid content-row">
+	<div class="span1">&nbsp;</div>
+<div class="span7 content">
+	<h1>wheei</h1>
+	<article>
+		<p>a javascript native code embed template with</p>
+<ul>
+<li>clear</li>
+<li>powerful</li>
+<li>Compatible</li>
+</ul>
+<p>compare with similar libs</p>
+<table style="width: 500px;table-layout: fixed;">
+<thead>
+<tr>
+<th style="width:60px;"></th>
+<th style="text-align:center">ejs</th>
+<th style="text-align:center">dot</th>
+<th style="text-align:center">wheei</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>javascript</td>
+<td style="text-align:center">√</td>
+<td style="text-align:center">√</td>
+<td style="text-align:center">√</td>
+</tr>
+<tr>
+<td>shortcut</td>
+<td style="text-align:center">×</td>
+<td style="text-align:center">√</td>
+<td style="text-align:center">√</td>
+</tr>
+<tr>
+<td>debug</td>
+<td style="text-align:center">√</td>
+<td style="text-align:center">×</td>
+<td style="text-align:center">√</td>
+</tr>
+<tr>
+<td>{{!0}}</td>
+<td style="text-align:center">√</td>
+<td style="text-align:center">×</td>
+<td style="text-align:center">√</td>
+</tr>
+<tr>
+<td>mark safe</td>
+<td style="text-align:center">×</td>
+<td style="text-align:center">×</td>
+<td style="text-align:center">√</td>
+</tr>
+</tbody>
+</table>
+<h2 id="fire">fire</h2>
+<h3 id="output">output</h3>
+<pre><code class="lang-php">&lt;%=&#39;hello&#39;%&gt;
+&lt;%=0%&gt;
+&lt;%=false%&gt;
+&lt;%=true%&gt;
+&lt;%=null%&gt;
+</code></pre>
+<h3 id="escapes-html">escapes html</h3>
+<pre><code class="lang-php-fn">&lt;%-&#39;1&lt;2&#39;%&gt;
+</code></pre>
+<h3 id="embedded-javascript">embedded javaScript</h3>
+<pre><code class="lang-php-fn">&lt;%
+    var a=0;
+%&gt;
+&lt;%-a+1%&gt;
+</code></pre>
+<h3 id="if">if</h3>
+<pre><code class="lang-php-fn">&lt;%
+    var a=1;
+%&gt;
+&lt;% if(a===1){ %&gt;
+
+&lt;% }else if(a===2){ %&gt;
+
+&lt;% }else{ %&gt;
+
+&lt;% } %&gt;
+</code></pre>
+<h3 id="if-shortcut">if shortcut</h3>
+<pre><code class="lang-php-fn">&lt;%
+    var a=1;
+%&gt;
+&lt;%? a===1 %&gt;
+
+&lt;%?? a===2 %&gt;
+
+&lt;%??%&gt;
+
+&lt;%?%&gt;
+</code></pre>
+<h3 id="loop">loop</h3>
+<pre><code class="lang-php-fn">&lt;%var arr=[&#39;a&#39;,&#39;b&#39;,&#39;c&#39;];if(arr)for(var i=0;i&lt;arr.length;i++){var v=arr[i];%&gt;
+    &lt;li&gt;&lt;%-i%&gt; : &lt;%-v%&gt;&lt;/li&gt;
+&lt;%}%&gt;
+</code></pre>
+<h3 id="loop-shortcut">loop shortcut</h3>
+<pre><code class="lang-php-fn">&lt;%~[&#39;a&#39;,&#39;b&#39;,&#39;c&#39;] i,v%&gt;
+    &lt;li&gt;&lt;%-i%&gt; : &lt;%-v%&gt;&lt;/li&gt;
+&lt;%~%&gt;
+
+&lt;%~[&#39;a&#39;,&#39;b&#39;,&#39;c&#39;] v%&gt;
+    &lt;li&gt;&lt;%-v%&gt;&lt;/li&gt;
+&lt;%~%&gt;
+</code></pre>
+<h3 id="comment">comment</h3>
+<pre><code class="lang-php-fn">&lt;%/*this is a comment too*/%&gt;
+</code></pre>
+<h3 id="commment-shortcut">commment shortcut</h3>
+<pre><code class="lang-php">&lt;%*
+this is a comment
+this is a comment
+this is a comment
+this is a comment
+%&gt;
+&lt;%*this is a comment too%&gt;
+</code></pre>
+<h3 id="variables-output-to-template">variables output to template</h3>
+<pre><code class="lang-php">&lt;script&gt;
+    var a=&lt;%${id:1,name:&#39;wheei&#39;}%&gt;
+    var b=&lt;%$&#39;&lt;/script&gt;&#39;%&gt;
+    var c=&lt;%$&#39;null&#39;%&gt;
+&lt;/script&gt;
+</code></pre>
+<p>render html</p>
+<pre><code class="lang-javascript">var html=wheei(&#39;&lt;h1&gt;&lt;%-it.title%&gt;&lt;/h1&gt;&#39;,{title:&#39;wheei&#39;}); // &#39;wheei&#39;
+</code></pre>
+<p>get template function</p>
+<pre><code class="lang-javascript">var func=wheei(&#39;&lt;h1&gt;&lt;%-it.title%&gt;&lt;/h1&gt;&#39;);         // function(it){...}
+func({title:&#39;wheei&#39;});                            // &#39;wheei&#39;
+</code></pre>
+<p>third argument is config</p>
+<pre><code class="lang-javascript">var html=wheei(&#39;&lt;%-data%&gt;&#39;,&#39;ok&#39;,{
+    argName:data
+}); // &#39;ok&#39;
+</code></pre>
+<ul>
+<li>open    <code>&lt;%</code></li>
+<li>close   <code>%&gt;</code></li>
+<li>argName <code>it</code></li>
+<li>strip   <code>false</code>     strip white-space between lines</li>
+</ul>
+<p>the globel default is <code>wheei.conf</code></p>
+<ul>
+<li>wheei is a global variable (because template function will access it)</li>
+</ul>
+<h2 id="beyond">beyond</h2>
+<h3 id="mark-safe">mark safe</h3>
+<pre><code class="lang-javascript">    wheei(&#39;&lt;%-it%&gt;&#39;,&#39;&lt;a href=&quot;xxx&quot;&gt;xxx&lt;/a&gt;&#39;); // you will get a `&lt;a href=&quot;xxx&quot;&gt;xxx&lt;/a&gt;` text
+    wheei(&#39;&lt;%-it%&gt;&#39;,wheei.markSafe(&#39;&lt;a href=&quot;xxx&quot;&gt;xxx&lt;/a&gt;&#39;)); // you will get a link element
+    wheei(&#39;&lt;%=it%&gt;&#39;,wheei.markSafe(&#39;&lt;a href=&quot;xxx&quot;&gt;xxx&lt;/a&gt;&#39;)); // you will get a link element too
+</code></pre>
+<h3 id="inner-template">inner template</h3>
+<pre><code class="lang-php">&lt;%#list data , a%&gt;
+    &lt;%~data item%&gt;
+        &lt;li&gt;&lt;%-item%&gt;&lt;/li&gt;
+    &lt;%~%&gt;
+    &lt;%=a%&gt;
+&lt;%#%&gt;
+&lt;%=list([&#39;first&#39;,&#39;second&#39;],&#39;aaa&#39;)%&gt;
+</code></pre>
+<p>same to</p>
+<pre><code class="lang-php">&lt;%function list(data , a){var __out=&#39;&#39;;%&gt;
+    &lt;%~data item%&gt;
+        &lt;li&gt;&lt;%-item%&gt;&lt;/li&gt;
+    &lt;%~%&gt;
+    &lt;%=a%&gt;
+&lt;%return __out;} %&gt;
+&lt;%=list([&#39;first&#39;,&#39;second&#39;],&#39;aaa&#39;)%&gt;
+</code></pre>
+<h3 id="include-template">include template</h3>
+<pre><code class="lang-html">&lt;script type=&quot;text/plain&quot; id=&quot;list&quot;&gt;
+    &lt;%~data item%&gt;
+        &lt;li&gt;&lt;%-item%&gt;&lt;/li&gt;
+    &lt;%~%&gt;
+&lt;/script&gt;
+</code></pre>
+<pre><code class="lang-javascript">wheei.tpls.list = wheei(document.getElementById(&#39;list&#39;).innerHTML);
+</code></pre>
+<pre><code class="lang-html">&lt;script type=&quot;text/plain&quot; id=&quot;page&quot;&gt;
+    &lt;h1&gt;in page&lt;/h1&gt;
+    &lt;%=wheei.tpls.list([&#39;first&#39;,&#39;second&#39;])%&gt;
+&lt;/script&gt;
+</code></pre>
+<h2 id="nodejs-with-express">nodejs with express</h2>
+<p><code>npm install wheei --save</code></p>
+<pre><code class="lang-javascript">var wheei=require(&#39;wheei&#39;);
+var path=require(&#39;path&#39;);
+
+app.engine(&#39;whe&#39;,wheei.__express);
+app.set(&#39;view engine&#39;, &#39;whe&#39;);
+app.set(&#39;views&#39;, path.join(__dirname,&#39;views&#39;));
+// if `view cache` is `true`,you have to restart server after `.whe` file change
+app.set(&#39;view cache&#39;, true||false);
+</code></pre>
+<h3 id="include">include</h3>
+<p><code>index.whe</code>:</p>
+<pre><code>index.whe
+&lt;%@ &#39;whe/a.whe&#39;,&#39;hello&#39;%&gt;
+index.whe
+</code></pre><p><code>whe/a.whe</code>:</p>
+<pre><code>a.whe:&lt;%=it%&gt;
+</code></pre><p>result is:</p>
+<pre><code>index.whe
+a.whe:hello
+index.whe
+</code></pre><h4 id="about-the-path">about the path</h4>
+<p>just like linux <code>cd</code></p>
+<ul>
+<li>the root is <code>app.set(&#39;views&#39;, path.join(__dirname,&#39;views&#39;))</code></li>
+<li><code>absolute</code> start with <code>/</code>,like <code>/index.whe</code></li>
+<li><code>relative</code> like <code>whe/a.whe</code> <code>./whe/a.whe</code> <code>../index.whe</code></li>
+</ul>
+	</article>
+</div>
+</div>
+</div>
+</div>
+
+
+
+
+
+
+
+
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.1/jquery.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.2.0/highlight.min.js"></script>
+	<script type="text/javascript" src="https://cdn.rawgit.com/p2world/wheei/master/wheei.js"></script>
+	<script type="text/javascript" src="http://lisperator.net/s/js/uglifyjs/uglify.js~afade0740ce926d6a0aa8f5b5e49f1e93913b759"></script>
+	<script type="text/javascript">
+
+!function(){
+var jcont=$('.site');
+$('.action-compiler-fullscreen').click(function(){
+	jcont.toggleClass('fullscreen-compiler');
+})
+
+var jtext=$('#tpl_text');
+var jout=$('.compiler-output');
+
+function send(){
+	var jele=$(this).children().eq(0);
+	jtext.val(jele.text());
+}
+function send2(){
+	var jele=$(this);
+	jtext.val(jele.data('tpl'));
+}
+$('[data-action=compile]').click(function(){
+	var jpre=$('<pre class=""></pre>').data({
+		tpl:jtext.val()
+	}).dblclick(send2);
+	try{
+		var res=UglifyJS.parse(window.wheei(jtext.val()).toString()).print_to_string({
+			beautify:true
+		});
+		var jcode=$('<code class="lang-javascript"></code>');
+		jcode.text(res);
+		hljs.highlightBlock(jcode[0]);
+		jpre.append(jcode);
+	}catch(e){
+		jpre.text(e.message).css('color','red');
+	}
+	jout.prepend(jpre).scrollTop(0);
+});
+$('[data-action=render]').click(function(){
+	var jpre=$('<pre class=""></pre>').data({
+		tpl:jtext.val()
+	}).dblclick(send2);
+	try{
+		var res=window.wheei(jtext.val(),{});
+		var jcode=$('<code class="lang-html"></code>');
+		jcode.text(res);
+		hljs.highlightBlock(jcode[0]);
+		jpre.append(jcode);
+	}catch(e){
+		jpre.text(e.message).css('color','red');
+	}
+	jout.prepend(jpre).scrollTop(0);
+});
+
+
+$('.lang-php').each(function(){
+	var jcode=$(this);
+	jcode.parent().addClass('compare_lang').dblclick(send);
+	var jhtml=$('<code class="lang-html"></code>').insertAfter(jcode);
+	jhtml.text(window.wheei(jcode.text(),{}));
+});
+$('.lang-php-fn').each(function(){
+	var jcode=$(this);
+	jcode.parent().addClass('compare_lang').dblclick(send);
+	var jhtml=$('<code class="lang-javascript"></code>').insertAfter(jcode);
+	jhtml.text(UglifyJS.parse(window.wheei(jcode.text()).toString()).print_to_string({
+		beautify:true
+	}));
+});
+hljs.initHighlightingOnLoad();
+// hljs.highlightBlock(block);
+
+
+
+
+
+
+}();
+	</script>
+</body>
+</html>
