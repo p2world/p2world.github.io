@@ -1,0 +1,232 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>批量URL 评审</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/css/bootstrap.min.css">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script>
+    <style type="text/css">
+html,body{
+    overflow: hidden;
+    height: 100%;
+}
+#res{
+    height:100%;
+    width:280px;
+    vertical-align: top;
+    display: inline-block;
+}
+#restxt{
+    height: -webkit-calc(100% - 100px);
+    width:260px;
+    resize:none;
+}
+#txtUrl{
+    height: -webkit-calc(100% - 10px);
+    width:-webkit-calc(100% - 300px);
+    white-space: nowrap;
+    resize:none;
+}
+.started #txtUrl{
+    display: none;
+}
+#working{
+    width:-webkit-calc(100% - 300px);
+    height:100%;
+    display: none;
+    overflow: hidden;
+}
+#ifrs{
+    width:100%;
+    height: -webkit-calc(100% - 31px);
+}
+#ifrs *{
+    width: 100%;
+    height: 1px;
+}
+#ifrs :first-child{
+    height: -webkit-calc(100% - 10px);
+}
+#url{
+    text-indent: 20px;
+    height: 30px;
+    line-height: 30px;
+    overflow: hidden;
+    border-bottom: 1px solid #999;
+    white-space: nowrap;
+}
+.started #working{
+    display: inline-block;
+}
+#d1,#d2{
+    height: 100%;
+    width: 100%;
+}
+#d2{
+    display: none;
+}
+#config{
+    width: 280px;
+    height: 100%;
+    display: inline-block;
+    vertical-align: top;
+}
+.started #btnStart{
+    display: none;
+}
+#btns,.stat{
+    display: none;
+}
+.started #btns,.started .stat{
+    display: block;
+}
+    </style>
+</head>
+<body>
+    <div id="d1">
+        <textarea id="txtUrl" placeholder="粘贴url到这里"></textarea>
+        <div id="working">
+            <div id="url"></div>
+            <div id="ifrs">
+                <iframe frameborder="0"></iframe>
+                <iframe frameborder="0"></iframe>
+            </div>
+        </div>
+        <div id="config">
+            <h2 class="heading stat" id="progress">
+                1/20
+            </h2>
+            <button id="btnStart" class="control-group btn btn-large btn-block btn-danger">启动</button>
+            <div id="btns">
+                <p>通过修改文本框，修改结果文案</p>
+                <div class="control-group">
+                    <div class="input-append">
+                        <input class="span2" type="text">
+                        <button class="btn  btn-success">正常</button>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="input-append">
+                        <input class="span2" type="text">
+                        <button class="btn  btn-warning">异常</button>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="input-append">
+                        <input class="span2" type="text">
+                        <button class="btn  btn-primary">备用</button>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="input-append">
+                        <input class="span2" type="text">
+                        <button class="btn">其他</button>
+                    </div>
+                </div>
+                <button class="btn btn-block btn-info" onclick="iframeRefresh()">刷新</button>
+            </div>
+        </div>
+    </div>
+    <div id="d2">
+        <div id="res">
+            <textarea id="restxt"></textarea>
+            <p>按 ctrl+a 全选 copy到excel中</p>
+            <button class="btn btn-info btn-block" onclick="location.reload()">新的开始</button>
+        </div>
+    </div>
+    <script type="text/javascript">
+if(!/WebKit/.test(navigator.userAgent)){
+    alert('请使用 谷歌浏览器');
+}else{
+function iframeRefresh(){
+    var ifr=$("#ifrs iframe")[0];
+    ifr.src=ifr.src;
+}
+(function(){
+var btnText=localStorage.btnText;
+var btnArr;
+var jInputs=$("#btns input");
+jInputs.blur(function(){
+    localStorage.btnText=JSON.stringify(jInputs.toArray().map(function(ele){
+        return ele.value;
+    }));
+});
+if(btnText){
+    btnArr=JSON.parse(btnText);
+}else{
+    btnArr=['正常',"异常","备用","其他"];
+}
+jInputs.each(function(i){
+    $(this).val(btnArr[i]);
+});
+var started=false;
+var data=[
+    {
+        url:"http://www.baidu.com",
+        comment:"正常"
+    }
+];
+var index=0;
+$("#btns .control-group button").click(function(){
+    comment($(this).prev().val())
+});
+$("#btnStart").click(function(){
+    $("#d1").addClass("started");
+    started=true;
+    var text=$("#txtUrl").val();
+    if(text.slice(-1)==='\n'){
+        text=text.slice(0,-1);
+    }
+    data=text.split('\n').map(function(url){
+        return {url:url.trim()};
+    });
+    iniIfr();
+});
+function comment(resp){
+    data[index].comment=resp.trim();
+    next();
+}
+function next(){
+    index++;
+    if(index===data.length){
+        complete();
+    }else{
+        show();
+    }
+}
+var jIfrs=$("#ifrs");
+function iniIfr(){
+    $("#ifrs iframe").each(function(i){
+        if(i<data.length){
+            this.src=data[i].url;
+        }else{
+            $(this).remove();
+        }
+    });
+    $("#progress").text((index+1)+"/"+data.length);
+    $("#url").text(data[index].url);
+}
+function show(){
+    $("#progress").text((index+1)+"/"+data.length);
+    $("#url").text(data[index].url);
+    var i=index+jIfrs.children().length-1;
+    if(i<data.length){
+        $("#ifrs iframe").eq(0).appendTo(jIfrs)[0].src=data[i].url;
+    }else{
+        $("#ifrs iframe").eq(0).remove();
+    }
+}
+function complete () {
+    $("#d1").hide();
+    $("#restxt").val(data.map(function(obj){
+        return obj.comment;
+    }).join("\n")+"\n");
+    $("#txtUrl").prependTo("#d2");
+    $("#d2").show();
+}
+}());
+}
+    </script>
+</body>
+</html>

@@ -16,13 +16,13 @@ Jeact = Klas.extend({
 
         this.$el = $(html).data('widget', this);
 
-        var tmp = refs_compones(this.$el);
+        var tmp = refsAndWidgets(this.$el);
         // jquery节点们
         this.refs = tmp[0];
         // 子模块们
         var widgets = tmp[1];
 
-        // 绑定事假
+        // 绑定事件
         var events = this.events;
         for (var i = 0; i < events.length; i++) {
             var event = events[i];
@@ -77,7 +77,7 @@ Jeact = Klas.extend({
     }
 });
 
-function refs_compones($el) {
+function refsAndWidgets($el) {
     var res;
     var refs = {};
     var widgets = {};
