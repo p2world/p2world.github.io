@@ -37,7 +37,6 @@ Jeact = Klas.extend({
             this.$el.on.apply(this.$el, args);
         }
 
-        this.init();
 
 
 
@@ -50,6 +49,8 @@ Jeact = Klas.extend({
             $widget.replaceWith(widget.$el);
             this.widgets[name] = widget;
         }
+
+        this.init();
     },
     // 组件整体的jquery对象
     $el: null,
@@ -60,13 +61,24 @@ Jeact = Klas.extend({
     // string || function
     template: '',
     // this.$el.on()
-    events: [],
+    events: [
+        ['_remove', 'onRemove']
+    ],
     preInit: function() {},
     init: function() {},
     // 与refs对应
     initWidgets: function() {
         return {};
     },
+    // 移除本组件
+    remove: function() {
+        this.$el.find('[widget]').andBack().each(function() {
+            $(this).triggerHandler('_remove');
+        });
+        this.$el.remove();
+    },
+    // 在被remove时调用
+    onRemove: function() {},
     // 触发自身事件 不冒泡
     emit: function() {
         return this.$el.triggerHandler.apply(this.$el, arguments);
@@ -76,6 +88,14 @@ Jeact = Klas.extend({
         return this.$el.trigger.apply(this.$el, arguments);
     }
 });
+
+var extend = Jeact.extend;
+// 继承父类events
+Jeact.extend = function() {
+    var proto = arguments[arguments.length - 1];
+    proto.events = this.prototype.events.concat(proto.events || []);
+    return extend.apply(this, arguments);
+};
 
 function refsAndWidgets($el) {
     var res;

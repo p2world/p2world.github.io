@@ -1,43 +1,3 @@
-var App = Jeact.extend({
-    template: '<div class="app">' +
-        '<div widget="input"></div>' +
-        '<div ref="btndone" class="app_btndone">allDone</div>' +
-        '<div ref="todos"></div>' +
-        '</div>',
-    events: [
-        ['click', '[ref=btndone]', 'allDone'],
-        ['_todo_del', 'onDel']
-    ],
-    initWidgets: function() {
-        return {
-            input: new Input({
-                onNew: $.proxy(this, 'onNew')
-            })
-        };
-    },
-    allDone: function() {
-        $.each(this.refs.todos.children(), function(i, ele) {
-            $(ele).data('widget').done();
-        });
-    },
-    val: function() {
-        return $.map(this.refs.todos.children(), function(ele) {
-            return $(ele).data('widget').val();
-        });
-    },
-    // 新增一个todo
-    onNew: function(text) {
-        var todo = new DeleteTodo({
-            text: text
-        });
-        this.refs.todos.append(todo.$el);
-    },
-    onDel: function(e, data) {
-        $(e.target).remove();
-        alert('Del! ' + data.text);
-    }
-});
-
 var Input = Jeact.extend({
     template: '<input>',
     events: [
@@ -99,7 +59,7 @@ var DeleteTodo = Todo.extend({
     // 这样来继承父类事件
     events: [
         ['click', '[ref=btndel]', 'onDel']
-    ].concat(Todo.prototype.events),
+    ],
     onDel: function(e) {
         this.dispatch('_todo_del', {
             text: this.props.text
@@ -107,6 +67,45 @@ var DeleteTodo = Todo.extend({
     }
 });
 
+var App = Jeact.extend({
+    template: '<div class="app">' +
+        '<div widget="input"></div>' +
+        '<div ref="btndone" class="app_btndone">allDone</div>' +
+        '<div ref="todos"></div>' +
+        '</div>',
+    events: [
+        ['click', '[ref=btndone]', 'allDone'],
+        ['_todo_del', 'onDel']
+    ],
+    initWidgets: function() {
+        return {
+            input: new Input({
+                onNew: $.proxy(this, 'onNew')
+            })
+        };
+    },
+    allDone: function() {
+        $.each(this.refs.todos.children(), function(i, ele) {
+            $(ele).data('widget').done();
+        });
+    },
+    val: function() {
+        return $.map(this.refs.todos.children(), function(ele) {
+            return $(ele).data('widget').val();
+        });
+    },
+    // 新增一个todo
+    onNew: function(text) {
+        var todo = new DeleteTodo({
+            text: text
+        });
+        this.refs.todos.append(todo.$el);
+    },
+    onDel: function(e, data) {
+        $(e.target).remove();
+        alert('Del! ' + data.text);
+    }
+});
 
 var BetterApp = App.extend({
     template: '<div class="app">' +
@@ -117,16 +116,32 @@ var BetterApp = App.extend({
         '</div>',
     initWidgets: function() {
         // 重写方法时记得要调用父类的同名方法
-        return $.extend(App.prototype.initWidgets.call(this), {
-            title: new Title({
-                text: 'BetterApp'
-            })
+        var sWidgets=this.superProto_.initWidgets.call(this);
+        return $.extend(sWidgets, {
+            title: new Title()
         });
+    },
+    onDel:function(e,data){
+        this.superProto_.onDel.apply(this,arguments);
+        this.widgets.title.val(data.text);
     }
 });
+
 var Title = Jeact.extend({
     template: function() {
-        return '<div>' + this.props.text + '</div>';
+        return '<div>' +
+                '最近删除：' +
+                '<span ref="title">' +
+                '</span>' +
+            '</div>';
+    },
+    val:function(value){
+        if(arguments.length){
+            this.value=value;
+            this.refs.title.text(value);
+        }else{
+            return this.value;
+        }
     }
 });
 

@@ -8,7 +8,6 @@
         var super_ = this;
         var superProto = super_.prototype;
         var proto;
-        // super_ + mixins
         var mixins = [];
 
         // init params
@@ -57,7 +56,8 @@
         }
 
         // set superClass
-        ctor.superProto = superProto;
+        ctor.super_ = super_;
+        proto.superProto_ = superProto;
 
         // extends proto
         extend(realProto, proto);
