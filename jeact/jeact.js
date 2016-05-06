@@ -47,6 +47,7 @@ Jeact = Klas.extend({
             var $widget = widgets[name];
             var widget = widgetMap[name];
             $widget.replaceWith(widget.$el);
+            widget.$el.attr('widget',name);
             this.widgets[name] = widget;
         }
 
