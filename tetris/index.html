@@ -1,0 +1,124 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>俄罗斯方块</title>
+  <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0" />
+<style type="text/css">
+  body {overflow:hidden; background: #d7d7d7;margin: 0;-webkit-user-select:none;-webkit-touch-callout:none;}
+  #tetris,
+  .warp{
+    position: relative;
+    margin: 0;
+    overflow: hidden;
+   /* border: 1px solid black;
+    padding: 20px;*/
+  }
+  #canvas {
+    width: 200px;
+    height: 440px;
+    background-color: #d7d7d7;
+
+    position: relative;
+    color: #fff;
+  }
+  #canvas h1 {
+    position: relative;
+    line-height: 30px;
+    z-index: 10;
+    margin: 0; padding: 0; text-align: center; font-size: 30px; padding-top: 200px;}
+  .piece {
+    border: 1px solid white;
+    position: absolute;
+  }
+  .square {
+    position: absolute;
+    width: 19px;
+    height: 19px;
+    /*background: #333 !important;*/
+    border: 1px solid #d7d7d7;
+  }
+  .type0 {background-color: #7fb80e;}
+  .type1 {background-color: #333;}
+  .type2 {background-color: #FF4A4A;}
+  .type3 {background-color: #FF4A4A;}
+  .type4 {background-color: #00B4D9;}
+  .type5 {background-color: #00B4D9;}
+  .type6 {background-color: #DE3669;}
+  #next_shape {position: relative; background-color: #000; border: 1px solid white;width: 110px; height: 110px;}
+  #info {
+    display: none; 
+    background-color: #000; color: #fff; float: right; width: 110px; height: 420px; padding: 10px;}
+.controls{
+  position: absolute;
+  width: 180px;
+  height: 180px;
+  bottom: 0;
+  right: 10px;
+}
+.controls div{
+  z-index: 100;
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  background: rgba(255, 255, 255,0.3);
+}
+.rotate{
+  top:0;
+  left: 60px;
+}
+.left{
+  top:60px;
+  left: 0;
+}
+.right{
+  top:60px;
+  left: 120px;
+}
+.down{
+  top: 120px;
+  left: 60px;
+}
+#line{
+  position: absolute;
+  left: 0;
+  top: 30%;
+  width: 100%;
+  font:bold 90px/1.2 monospace;
+  color: #fff;
+  opacity: 0;
+  text-align: center;
+  -webkit-transition:opacity 1s;
+}
+#line.flash{
+  opacity: 1;
+}
+</style>
+</head>
+
+<body>
+<div class="warp">
+<div id="tetris">
+<!-- <div id="board" style="float: right; border: 1px solid black;">Board<br /></div> -->
+<div style="height:2000px;"></div>
+  <div id="info">
+    <div id="next_shape"></div>
+    <p id="level">Level: <span></span></p>
+    <p id="lines">Lines: <span></span></p>
+    <p id="score">Score: <span></span></p>
+    <p id="time">Time: <span></span></p>
+    <p id="restart" onclick="restart()">restart</p>
+  </div>
+  <div id="canvas"></div>
+</div>
+<div id="controls" class="controls">
+  <div id="rotate" class="rotate"></div>
+  <div id="left" class="left"></div>
+  <div id="right" class="right"></div>
+  <div id="down" class="down"></div>
+</div>
+<div id="line">1</div>
+</div>
+<script type="text/javascript" src="tetris.js?v=2"></script>
+</body>
+</html>

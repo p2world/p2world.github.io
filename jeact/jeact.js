@@ -1,3 +1,5 @@
+;(function(){
+
 Jeact = Klas.extend({
     constructor: function(props) {
         if (props == null) {
@@ -131,3 +133,5 @@ function proxyHandler(widget, handler) {
         }
     };
 }
+
+}());
