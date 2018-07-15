@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>定投保险计算器</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    <link rel="stylesheet" href="https://weui.io/weui.css">
+</head>
+<body>
+    <div class="weui-cells weui-cells_form" id="form">
+        <div class="weui-cell">
+            <div class="weui-cell__hd"><label class="weui-label">当前年龄</label></div>
+            <div class="weui-cell__bd">
+                <input class="weui-input" type="number" name="age" pattern="[0-9]*" value="30">
+            </div>
+        </div>
+        <div class="weui-cell">
+            <div class="weui-cell__hd"><label class="weui-label">首次投资</label></div>
+            <div class="weui-cell__bd">
+                <input class="weui-input" type="number" name="first" pattern="[0-9]*" value="10000">
+            </div>
+        </div>
+        <div class="weui-cell">
+            <div class="weui-cell__hd"><label class="weui-label">每年追加</label></div>
+            <div class="weui-cell__bd">
+                <input class="weui-input" type="number" name="follow" pattern="[0-9]*" value="10000">
+            </div>
+        </div>
+        <div class="weui-cell">
+            <div class="weui-cell__hd"><label class="weui-label">总年限</label></div>
+            <div class="weui-cell__bd">
+                <input class="weui-input" type="number" name="year" pattern="[0-9]*" value="10">
+            </div>
+        </div>
+        <div class="weui-cell">
+            <div class="weui-cell__hd"><label class="weui-label">基准利率(%)</label></div>
+            <div class="weui-cell__bd">
+                <input class="weui-input" type="number" name="interest" value="4.5" placeholder="近期余额宝为4.2%">
+            </div>
+        </div>
+    </div>
+    <div class="weui-btn-area">
+        <div class="weui-btn weui-btn_primary" id="submit">计算</div>
+    </div>
+    <div id="result" style="display: none">
+        <div class="weui-cells__title">结果</div>
+        <div class="weui-cells">
+            <div class="weui-cell">
+                <div class="weui-cell__bd">
+                    <p>缴完年龄</p>
+                </div>
+                <div class="weui-cell__ft" id="finishAge">45</div>
+            </div>
+            <div class="weui-cell">
+                <div class="weui-cell__bd">
+                    <p>本息和</p>
+                </div>
+                <div class="weui-cell__ft" id="finishTotal">45</div>
+            </div>
+        </div>
+        <div class="weui-cells__title">详细本息和</div>
+        <div class="weui-cells" id="history"></div>
+    </div>
+    <script src="https://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+    <script>
+        $('#submit').on('click', function () {
+            var form = {}
+            var eachRes;
+            $('#form input').each(function () {
+                var value = this.value.trim();
+                if (!value) {
+                    alert('请填写每一项');
+
+                    return eachRes = false;
+                }
+                form[this.name] = Number(value);
+            });
+
+            if (eachRes === false) {
+                return;
+            }
+            var history = []
+            var total = form.first;
+            var interest = 1 + form.interest / 100;
+
+            history.push([form.age,total])
+            for (var i=form.age + 1; i < form.year + form.age; i++) {
+                total *= interest
+                total += form.follow
+                history.push([i,total])
+            }
+            $('#finishAge').text(i-1+'岁');
+            $('#finishTotal').text(total.toFixed(0) + '元');
+
+            for (; i<76; i++) {
+                total *= interest
+                history.push([i, total]);
+            }
+
+            $('#history').html(history.reverse().map(function (item) {
+                return '<div class="weui-cell"> <div class="weui-cell__bd"> <p>'+item[0] + '岁</p> </div> <div class="weui-cell__ft">'+ item[1].toFixed(0) +'元</div> </div>';
+            }).join(''));
+            $('#result').show();
+        });
+    </script>
+</body>
+</html>
