@@ -5,38 +5,38 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>定投保险计算器</title>
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
-    <link rel="stylesheet" href="https://weui.io/weui.css">
+    <link rel="stylesheet" href="//res.wx.qq.com/open/libs/weui/1.1.3/weui.min.css">
 </head>
 <body>
     <div class="weui-cells weui-cells_form" id="form">
         <div class="weui-cell">
             <div class="weui-cell__hd"><label class="weui-label">当前年龄</label></div>
             <div class="weui-cell__bd">
-                <input class="weui-input" type="number" name="age" pattern="[0-9]*" value="30">
+                <input class="weui-input" type="number" name="age" pattern="[0-9]*">
             </div>
         </div>
         <div class="weui-cell">
             <div class="weui-cell__hd"><label class="weui-label">首次投资</label></div>
             <div class="weui-cell__bd">
-                <input class="weui-input" type="number" name="first" pattern="[0-9]*" value="10000">
+                <input class="weui-input" type="number" name="first" pattern="[0-9]*">
             </div>
         </div>
         <div class="weui-cell">
             <div class="weui-cell__hd"><label class="weui-label">每年追加</label></div>
             <div class="weui-cell__bd">
-                <input class="weui-input" type="number" name="follow" pattern="[0-9]*" value="10000">
+                <input class="weui-input" type="number" name="follow" pattern="[0-9]*">
             </div>
         </div>
         <div class="weui-cell">
             <div class="weui-cell__hd"><label class="weui-label">总年限</label></div>
             <div class="weui-cell__bd">
-                <input class="weui-input" type="number" name="year" pattern="[0-9]*" value="10">
+                <input class="weui-input" type="number" name="year" pattern="[0-9]*">
             </div>
         </div>
         <div class="weui-cell">
             <div class="weui-cell__hd"><label class="weui-label">基准利率(%)</label></div>
             <div class="weui-cell__bd">
-                <input class="weui-input" type="number" name="interest" value="4.5" placeholder="近期余额宝为4.2%">
+                <input class="weui-input" type="number" name="interest" placeholder="近期余额宝为4.2%">
             </div>
         </div>
     </div>
@@ -104,6 +104,5 @@
             $('#result').show();
         });
     </script>
-
 </body>
 </html>
