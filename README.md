@@ -101,9 +101,9 @@ value = "<script>alert(1);</script>"
 
 ### script标签内
 
-在script标签内，都是js代码，和 `html` 完全没有关系,浏览器不会把他们当做 `html` 代码解析。所以 `script内` 需要自己的转义规则。我们一般只将`server数据` 输出到script标签内供浏览器代码使用。
+在script标签内，都是js代码，和 `html` 完全没有关系,浏览器不会把他们当做 `html` 代码解析。所以 `script内` 不使用 `html` 转义规则。
 
-比如我们将server端变量 `pageData` 传递给浏览器js使用:
+我们一般只将`server数据` 输出到script标签内供浏览器代码使用。比如我们将server端变量 `pageData` 传递给浏览器js使用:
 
 ```jsp
 <script>
@@ -113,7 +113,7 @@ var pageData = <%=json_dump(pageData)%>
 
 在浏览器js中通过 window.pageDate 就可以获取到。
 
-json_dump 就是专用的转义方法， 它是一个 `npm` 库，其他语言可以参考源码： 
+`json_dump` 就是 `script标签` 专用的转义方法， 它是一个 `npm` 库，其他语言可以参考源码： 
 
 ```javascript
 module.exports = function(it){
