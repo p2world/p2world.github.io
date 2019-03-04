@@ -6,14 +6,14 @@
     * 用户将自己的`html`代码注入到我们的`html`中
 
 
-* 这是一种`html`的注入，所以与`python`,数据库无关
+* 这是一种`html`的注入，所以与服务器,数据库无关
 
 ```python
 value = "<script>alert(1);</script>"
 ```
 
 ```php
-<p><?=value?></p>
+<p><%=value%></p>
 ```
 生成的html:
 ```text
@@ -31,7 +31,7 @@ value = "<script>alert(1);</script>"
 * 浏览器当做`纯文本`显示而不是`解析`它
 
 ```php
-<p><?-value?></p>
+<p><%-value%></p>
 ```
 
 生成的html：
@@ -47,8 +47,6 @@ value = "<script>alert(1);</script>"
 ```
 
 
-
-
 ### html转义
 
 为什么要转义
@@ -61,6 +59,15 @@ value = "<script>alert(1);</script>"
     * `>` `&gt;`
     * `&` `&amp;`
 
+怎么转义
+
+| 模板 | 转义 | 原样输出 |
+| ------ | ----------- | ----------- |
+| 很多老模板 | `<%-text%>` | `<%=htmlString%>` |
+| react   | 默认转义 | `<div dangerouslySetInnerHTML={htmlString}>` |
+| vue | 默认转义 | `<div v-html="htmlString">` |
+| artTemplate | 默认转义 | `{{@htmlString}}` |
+| jade pug | 默认转义 | `div!=htmlString` |
 
 例：要输出一个`</p>`字符串到页面,那html就会是：
 
@@ -92,73 +99,60 @@ value = "<script>alert(1);</script>"
 ```
 
 
-### script标签
+### script标签内
 
-在script标签中，都是js代码，浏览器不会把他们当做html代码解析，所以不需要`html转义`
+在script标签内，都是js代码，和 `html` 完全没有关系,浏览器不会把他们当做 `html` 代码解析。所以 `script内` 需要自己的转义规则。我们一般只将`server数据` 输出到script标签内供浏览器代码使用。
 
-script标签从`<script>`标签开始，一直到`</script>`标签截止，所以需要注意：
+比如我们将server端变量 `pageData` 传递给浏览器js使用:
 
-
-```html
+```jsp
 <script>
-···
-var a='</script>'; //到`>`这里script标签就截止了！！！
-···
+var pageData = <%=json_dump(pageData)%>
 </script>
 ```
 
+在浏览器js中通过 window.pageDate 就可以获取到。
 
+json_dump 就是专用的转义方法， 它是一个 `npm` 库，其他语言可以参考源码： 
 
-
-```html
-<script>
-···
-var a='<\/script>'; //这样就正确
-···
-</script>
+```javascript
+module.exports = function(it){
+    // handle with `undefined`
+    if(it == null){
+        return 'null';
+    }
+	return JSON.stringify(it).replace(/<\/(script)/ig,'<\\/$1');
+};
 ```
-
-
-#### 如何把数据打到script里：
-
-```html
-<script>
-···
-var a={{a|jsonify}};
-// 将会变成以下
-var a="<\/script>"; // 字符串里的 ' " / \ 字符都会被自动转义处理
-var a=null;
-var a={a:1};
-···
-</script>
-```
-
-   注：某些json库没有做`</script>`转为`<\/script>`，请自行replace或替换为其他库
-
-jsonify规则：
-
-* None    null
-* "str"   "str"
-* True    true
-* 1       1
-* map     JSON
-
 
 错误的方法：
 
 ```html
 <script>
-···
-var a="{{a}}";
-// 将会变成以下
+var a="<%-a%>"; 
+// 当 a 为 "h&m" 时 将会变成
 var a="h&amp;m" //原来的数据是 h&m
+```
 
+错误的方法2：
 
-var a="{{a|safe}}";
+```html
+<script>
+var a="<%=a%>"; 
+// 当 a 为 'a";alert(1)"'
 // 将会变成以下
-var a="</script>" //被截断
-var a="</script><script>alert(1);</script>" //被注入
-···
+var a="a";alert(1)"" //被注入
+</script>
+```
+
+错误的方法3：
+
+```html
+<script>
+var a="<%=a%>"; 
+// 当 a 为 "</script><script>alert(1);</script>"
+// 将会变成以下
+var a="</script><script>alert(1);</script>" //被注入 （script标签遇到 </script> 这几个字符就会结束）
 </script>
 ```
 
@@ -197,7 +191,7 @@ $('#d').data('text'); // "&"
 ### `javascript` 转义代码
 
 ```javacript
-function e(str){
+function encodeHtml(str){
     if(str==null){
         return '';
     }
@@ -218,6 +212,17 @@ function e(str){
 };
 ```
 
-### 换行符
+### 保留换行
 
-* 把`\n`替换为`<br/>` `<%=e(text).replace(/\n/g,"<br/>")%>`
+强烈推荐使用 `css` : `white-space: pre-wrap;`
+
+不推荐： `<%=encodeHtml(text).replace(/\n/g, '<br/>')%>`
+
+其他方法都会有安全问题
+ 
+ 
+ 
+ 
+ 
+ 
+ 
