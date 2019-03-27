@@ -206,7 +206,6 @@ async.waterfall([
 ```
 
 
-
 ## await async promise 串行
 
 
@@ -220,9 +219,98 @@ try {
 }
 ```
 
+## Promise async 转化
+
+```javascript
+new Promise((resolve, reject) => resolve(1))
+Promise.resolve(1)
+
+
+await new Promise((resolve, reject) => resolve(1))
+await Promise.resolve(1)
+await 1
+
+
+async function a () {
+    return 1
+}
+await a()
+a()
+
+
+async function b () {
+    return await aAjax('/loginUser', {})
+}
+await b()
+
+
+async function c () {
+    return aAjax('/loginUser', {})
+}
+await c()
+
+
+function d () {
+    return aAjax('/loginUser', {})
+}
+await d()
+
+
+function e () {
+    return Promise.resolve(1)
+}
+await e()
+```
+
+## Promise async 转化答案
+
+```javascript
+new Promise((resolve, reject) => resolve(1)) // Promise
+Promise.resolve(1) // Promise
+
+
+await new Promise((resolve, reject) => resolve(1)) // 1
+await Promise.resolve(1) // 1
+await 1 // 1
+
+
+async function a () {
+    return 1
+}
+await a() // 1
+a() // Promise
+
+
+async function b () {
+    return await aAjax('/loginUser', {})
+}
+await b() // loginUser
+
+
+async function c () {
+    return aAjax('/loginUser', {})
+}
+await c() // loginUser
+
+
+function d () {
+    return aAjax('/loginUser', {})
+}
+await d() // loginUser
+
+
+function e () {
+    return Promise.resolve(1)
+}
+await e() // 1
+```
+
+
+
+
+
 ## 参考资料
 
 * https://caolan.github.io/async/docs.html
 * 《nodejs深入浅出》
-
 
