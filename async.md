@@ -1,5 +1,7 @@
 # js异步编程
 
+[ppt](http://deckdown.org/deck?src=https%3A%2F%2Fraw.githubusercontent.com%2Fp2world%2Fp2world.github.io%2Fmaster%2Fasync.md)
+
 ## 有哪些异步编程
 
 
@@ -12,7 +14,7 @@ require('http').createServer(function (req, res) => {
 ```
 
 
-# 异步编程教派
+## 异步编程教派
 
 * error-first
 * await async Promise
@@ -65,7 +67,7 @@ try {
 }
 ```
 
-# 场景
+## 场景
 
 * 并行
 * 串行
@@ -217,4 +219,10 @@ try {
     alert('网络错误，请刷新重试')
 }
 ```
+
+## 参考资料
+
+* https://caolan.github.io/async/docs.html
+* 《nodejs深入浅出》
+
 
