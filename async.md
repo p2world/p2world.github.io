@@ -313,4 +313,4 @@ await e() // 1
 
 * https://caolan.github.io/async/docs.html
 * 《nodejs深入浅出》
-
+* http://es6.ruanyifeng.com/#docs/async
