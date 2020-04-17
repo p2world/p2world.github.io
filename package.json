@@ -1,0 +1,19 @@
+{
+  "dependencies": {
+    "lodash-es": "^4.17.15",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "rxjs": "^6.5.3"
+  },
+  "name": "react-demo",
+  "version": "1.0.0",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
