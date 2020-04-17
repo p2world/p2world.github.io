@@ -25,20 +25,6 @@ function App() {
   });
   const [filterName, setFilterName] = useState();
 
-  // 根本原因是想持久化 function，但还想获取到最新的state，所以有2种办法实现，
-  // 1: 建立inst
-  // 2：将最新的state传递进去
-  // debounce 实现
-  // const [inst] = useState(() => {
-  //   const inst = {}
-  //   inst.doDump= debounce(() => {
-  //     localStorage.todoList = JSON.stringify(inst.todoList)
-  //     console.log('dumped');
-  //   }, 1000, { 'maxWait': 10000 })
-  //   return inst
-  // })
-  // inst.todoList = todoList
-
   // Computed
   const leftCount = useMemo(()=> {
     return todoList.filter(item=>!item.completed).length
@@ -59,11 +45,28 @@ function App() {
   }, [filterName, todoList])
 
   // Watch
-  const doDump = useCallback(debounce(todoList => {
+  // 根本原因是想持久化 function，但还想获取到最新的state，所以有2种办法实现，
+  // 1：建立Callback, 将最新的state传递进去
+  // 1: 建立Memo, 使用闭包保存状态
+  // debounce 实现
+  const doDump = useMemo(() => {
+    let todoList
+    const debounceDump = debounce(() => {
       localStorage.todoList = JSON.stringify(todoList)
       console.log('dumped');
-  }, 1000, {maxWait: 10000}), [])
-  useEffect(doDump, [todoList])
+    }, 1000, { 'maxWait': 10000 })
+    return _todoList => {
+      todoList = _todoList
+      debounceDump();
+    }
+  }, [])
+  // const doDump = useCallback(debounce(todoList => {
+  //     localStorage.todoList = JSON.stringify(todoList)
+  //     console.log('dumped');
+  // }, 1000, {maxWait: 10000}), [])
+  useEffect(() => {
+    doDump(todoList)
+  }, [todoList])
 
   // Methods
   const addItem = useCallback(e => {
