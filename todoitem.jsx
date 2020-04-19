@@ -4,7 +4,7 @@ import TodoListContext from './todolist-context'
 
 
 export default React.memo(function TodoItem({item}) {
-    const {onUpdate, onDelete} = useContext(TodoListContext)
+    const {update, remove} = useContext(TodoListContext)
     const {text, completed, id} = item
     // State
     // const [editingValue, setEditingValue] = useState(text)
@@ -19,23 +19,23 @@ export default React.memo(function TodoItem({item}) {
         if (keyCode === 27) {
             e.target.value = text
         } else if (keyCode === 13) {
-            onUpdate({
+            update({
                 id,
                 text: e.target.value.trim()
             })
         }
-    }, [text, onUpdate])
+    }, [text])
 
     const onChangeComplete = useCallback(e => {
-        onUpdate({
+        update({
             id,
             completed: e.target.checked,
         })
-    }, [onUpdate])
+    }, [])
 
     const doDelete = useCallback(() => {
-        onDelete(id)
-    }, [onDelete])
+        remove(id)
+    }, [])
 
     return <div>
         <input type="text" defaultValue={text} onKeyDown={onKeyDown}/>
