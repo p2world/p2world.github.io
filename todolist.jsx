@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom'
 import {debounce} from 'lodash-es'
 
 import TodoItem from './todoitem'
-
-let id = 1
+import TodoListContext from './todolist-context'
+let id = Number(localStorage.todoListId) || 1
 
 
 
@@ -14,16 +14,16 @@ function App() {
   const [todoList, setTodoList] = useState(() => {
     let initList = []
     try{
-      const listStr = localStorage.todoList
-      if (listStr) {
+        const listStr = localStorage.todoList
+        if (listStr) {
         initList = JSON.parse(listStr)
-      }
+        }
     } catch(e) {
-      // do nothing
+        // do nothing
     }
-    return initList
+    return initList;
   });
-  const [filterName, setFilterName] = useState();
+  const [filterName, setFilterName] = useState('');
 
   // Computed
   const leftCount = useMemo(()=> {
@@ -53,6 +53,7 @@ function App() {
     let todoList
     const debounceDump = debounce(() => {
       localStorage.todoList = JSON.stringify(todoList)
+      localStorage.todoListId = id
       console.log('dumped');
     }, 1000, { 'maxWait': 10000 })
     return _todoList => {
@@ -117,19 +118,21 @@ function App() {
 
   return (
     <div>
-      <input type="text" onKeyDown={addItem}/>
-      <div>
-        {filteredList.map(item => <TodoItem key={item.id} item={item} onUpdate={onUpdate} onDelete={onDelete}/>)}
-      </div>
-      <p>{leftCount} items left</p>
+      <TodoListContext.Provider value={{todoList, onDelete, onUpdate}}>
+        <input type="text" onKeyDown={addItem}/>
+        <div>
+          {filteredList.map(item => <TodoItem key={item.id} item={item} onUpdate={onUpdate} onDelete={onDelete}/>)}
+        </div>
+        <p>{leftCount} items left</p>
 
-      <select onChange={onFilterChange}>
-        <option value="">All</option>
-        <option value="completed">Completed</option>
-        <option value="uncompleted">Uncompleted</option>
-      </select>
+        <select onChange={onFilterChange}>
+          <option value="">All</option>
+          <option value="completed">Completed</option>
+          <option value="uncompleted">Uncompleted</option>
+        </select>
 
-      <button onClick={clearCompleted}>Clear Completed</button>
+        <button onClick={clearCompleted}>Clear Completed</button>
+      </TodoListContext.Provider>
     </div>
   );
 }

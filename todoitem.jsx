@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useMemo,useCallback,useContext } from 'react';
+import TodoListContext from './todolist-context'
 
 
 
-
-export default React.memo(function TodoItem({item, onUpdate, onDelete}) {
+export default React.memo(function TodoItem({item}) {
+    const {onUpdate, onDelete} = useContext(TodoListContext)
     const {text, completed, id} = item
     // State
     // const [editingValue, setEditingValue] = useState(text)
