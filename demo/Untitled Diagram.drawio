@@ -1,1 +1,73 @@
-<mxfile host="app.diagrams.net" modified="2022-05-12T02:40:34.814Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.127 Safari/537.36" version="17.5.0" etag="DdIGFWSmhJLynGNKtdmK" type="github"><diagram id="HCBJQfSwD9cLyGo4vJ9B">UzV2zq1wL0osyPDNT0nNUTV2VTV2LsrPL4GwciucU3NyVI0MMlNUjV1UjYwMgFjVyA2HrCFY1qAgsSg1rwSLBiADYTaQg2Y1AA==</diagram></mxfile>
+<mxfile host="app.diagrams.net" modified="2022-05-12T02:58:20.962Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.127 Safari/537.36" etag="zIinzFHg8Q3Mzt4hrh9a" version="17.5.0" type="github">
+  <diagram id="HCBJQfSwD9cLyGo4vJ9B" name="Page-1">
+    <mxGraphModel dx="1094" dy="773" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="ZgehLIWqsyQo6HQClaXU-1" value="1 2" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="100" y="160" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ZgehLIWqsyQo6HQClaXU-2" value="5 6" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="300" y="160" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ZgehLIWqsyQo6HQClaXU-3" value="1 2 3" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="100" y="250" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ZgehLIWqsyQo6HQClaXU-4" value="5 6" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="300" y="250" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ZgehLIWqsyQo6HQClaXU-7" value="中位数" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="235" y="90" width="50" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="ZgehLIWqsyQo6HQClaXU-8" value="small" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="140" y="120" width="40" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="ZgehLIWqsyQo6HQClaXU-9" value="big" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="345" y="120" width="30" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="ZgehLIWqsyQo6HQClaXU-10" value="3 比5小，放左边" style="text;html=1;align=left;verticalAlign=top;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="450" y="170" width="100" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="ZgehLIWqsyQo6HQClaXU-11" value="7 比5大，先pop5，然后push7" style="text;html=1;align=left;verticalAlign=top;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="450" y="190" width="180" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="ZgehLIWqsyQo6HQClaXU-12" value="尽量2遍数量一致&lt;br&gt;实在不行，左边比右边多一个" style="text;html=1;align=left;verticalAlign=top;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="475" y="80" width="170" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ZgehLIWqsyQo6HQClaXU-13" value="只能看到中间2 和 5" style="text;html=1;align=left;verticalAlign=top;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="475" y="110" width="120" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="ZgehLIWqsyQo6HQClaXU-14" value="左边多的时候要想着放到右边，所以要看左边的数&lt;br&gt;2 比3小，所以pop3，放到右边，然后再push2&lt;br&gt;5 比3大 直接放到右边" style="text;html=1;align=left;verticalAlign=top;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="445" y="250" width="280" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="ZgehLIWqsyQo6HQClaXU-15" value="相等的时候要想着放到左边，所以要看右边的数" style="text;html=1;align=left;verticalAlign=top;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="450" y="150" width="270" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="ZgehLIWqsyQo6HQClaXU-16" value="&lt;u style=&quot;font-size: 24px;&quot;&gt;1 3 5&lt;/u&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=24;" vertex="1" parent="1">
+          <mxGeometry x="95" y="440" width="70" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ZgehLIWqsyQo6HQClaXU-17" value="&lt;u style=&quot;font-size: 24px&quot;&gt;7 9&lt;/u&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=24;" vertex="1" parent="1">
+          <mxGeometry x="165" y="440" width="50" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ZgehLIWqsyQo6HQClaXU-18" value="&lt;u style=&quot;font-size: 24px&quot;&gt;1 3&lt;/u&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=24;" vertex="1" parent="1">
+          <mxGeometry x="105" y="530" width="50" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ZgehLIWqsyQo6HQClaXU-19" value="&lt;u style=&quot;font-size: 24px&quot;&gt;7 9&lt;/u&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=24;" vertex="1" parent="1">
+          <mxGeometry x="165" y="530" width="50" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ZgehLIWqsyQo6HQClaXU-20" value="2" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=24;" vertex="1" parent="1">
+          <mxGeometry x="105" y="400" width="30" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ZgehLIWqsyQo6HQClaXU-21" value="6" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=24;" vertex="1" parent="1">
+          <mxGeometry x="155" y="400" width="30" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ZgehLIWqsyQo6HQClaXU-22" value="2" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=24;" vertex="1" parent="1">
+          <mxGeometry x="115" y="490" width="30" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ZgehLIWqsyQo6HQClaXU-23" value="6" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=24;" vertex="1" parent="1">
+          <mxGeometry x="140" y="490" width="30" height="30" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
