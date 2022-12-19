@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+* {
+    margin: 0;
+    padding: 0;
+}
+#main{
+    position: relative;
+    height: 100vh;
+    user-select: none;
+}
+span{
+    position: absolute;
+    width: 4vh;
+    height: 4vh;
+    border-radius: 50%;
+    background: lightblue;
+}
+#start {
+    position: absolute;
+    width: 200px;
+    height: 60px;
+    left: 50%;
+    top: 50%;
+    font-size: 35px;
+    margin: -30px 0 0 -100px;
+}
+    </style>
+</head>
+<body>
+    <div id="main" style="display: none"></div>
+    <button id="start">start</button>
+<script>
+const sbtn = document.getElementById('start');
+const mainEle = document.getElementById('main');
+
+sbtn.onclick = () => {
+    startGame()
+}
+
+let count = 0
+
+const dots = Array.from({length: 6}).map(_ => document.createElement('span'))
+dots.forEach(dot => {
+    dot.style = `top: ${random()}%;left: ${random()}%;`
+    dot.onclick = () => {
+        count++
+        dot.style = `top: ${random()}%;left: ${random()}%;`
+    }
+    mainEle.appendChild(dot)
+})
+
+function startGame() {
+    count = 0
+    mainEle.style = 'display: block'
+    sbtn.style = 'display: none'
+    setTimeout(() => {
+        mainEle.style = 'display: none'
+        sbtn.style = 'display: block'
+        sbtn.innerText = 'start ' + count
+    }, 30000)
+
+}
+
+function random() {
+    return Math.floor(Math.random() * 97)
+}
+
+</script>
+</body>
+</html>
