@@ -490,7 +490,7 @@ function getActiveOrFocusedElement() {
   return curActiveOrFocused;
 }
 function apiPageLayoutToViewerModes(layout) {
-  let scrollMode = ScrollMode.VERTICAL,
+  let scrollMode = ScrollMode.PAGE,
     spreadMode = SpreadMode.NONE;
   switch (layout) {
     case "SinglePage":
@@ -8641,7 +8641,7 @@ class PDFViewer {
     this._firstPageCapability = (0, _pdfjsLib.createPromiseCapability)();
     this._onePageRenderedCapability = (0, _pdfjsLib.createPromiseCapability)();
     this._pagesCapability = (0, _pdfjsLib.createPromiseCapability)();
-    this._scrollMode = _ui_utils.ScrollMode.VERTICAL;
+    this._scrollMode = _ui_utils.ScrollMode.PAGE;
     this._previousScrollMode = _ui_utils.ScrollMode.UNKNOWN;
     this._spreadMode = _ui_utils.SpreadMode.NONE;
     this.#scrollModePageState = {
@@ -11590,7 +11590,7 @@ class SecondaryToolbar {
     this.eventBus._on("secondarytoolbarreset", evt => {
       if (evt.source === this) {
         scrollModeChanged({
-          mode: _ui_utils.ScrollMode.VERTICAL
+          mode: _ui_utils.ScrollMode.PAGE
         });
       }
     });
