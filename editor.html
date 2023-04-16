@@ -4,16 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>editor</title>
-    <style>
-body{
-    box-sizing: border-box;
-    height: 100vh;
-    padding: 1em;
-    margin: 0;
-}
-    </style>
 </head>
-<body contenteditable>
-    ...
+<body>
+    <div contenteditable>
+        ...
+    </div>
+    <script>
+      document.body.onkeydown = e => {
+    if (e.key === 'j' && (e.metaKey || e.ctrlKey)) {
+        debugger
+        const selection = document.getSelection();
+        selection.anchorNode
+        const range = selection.getRangeAt(0)
+        const newDiv = document.createElement('div')
+        newDiv.innerText = (selection + '').replaceAll('\n', ' ')
+        const startElement = range.startContainer.nodeType === document.ELEMENT_NODE
+            ? range.startContainer
+            : range.startContainer.parentElement
+        startElement.parentElement.insertBefore(newDiv, startElement)
+        range.deleteContents()
+    }
+}
+    </script>
 </body>
 </html>
