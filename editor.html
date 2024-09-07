@@ -6,13 +6,12 @@
     <title>editor</title>
 </head>
 <body>
-    <div contenteditable>
+    <div contenteditable style="outline: none; margin-bottom: 90vh;">
         ...
     </div>
     <script>
       document.body.onkeydown = e => {
     if (e.key === 'j' && (e.metaKey || e.ctrlKey)) {
-        debugger
         const selection = document.getSelection();
         selection.anchorNode
         const range = selection.getRangeAt(0)
