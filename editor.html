@@ -6,11 +6,15 @@
     <title>editor</title>
 </head>
 <body>
-    <div contenteditable style="outline: none; margin-bottom: 90vh;">
+    <div>
+        <button type="button" onclick="reverseText()">reverse</button>
+    </div>
+    <div id="content" contenteditable style="outline: none; margin-bottom: 90vh;">
         ...
     </div>
     <script>
-      document.body.onkeydown = e => {
+const contentEle = document.getElementById('content')
+document.body.onkeydown = e => {
     if (e.key === 'j' && (e.metaKey || e.ctrlKey)) {
         const selection = document.getSelection();
         selection.anchorNode
@@ -23,6 +27,36 @@
         startElement.parentElement.insertBefore(newDiv, startElement)
         range.deleteContents()
     }
+}
+function reverseText() {
+    const pairs = {
+      '(': ')',
+      '[': ']',
+      '{': '}',
+      ')': '(',
+      ']': '[',
+      '}': '{',
+    }
+    const text = contentEle.innerText
+    contentEle.innerText = text.split(/\s*\n\s*/).map(line => {
+  return line.split(/\s+/).reverse().map(word => {
+    const last = word[word.length - 1]
+    const first = word[0]
+    if (',.;:!?'.indexOf(last) > -1) {
+      return last + word.slice(0,-1)
+    }
+    if (pairs[last]) {
+      return pairs[last] + word.slice(0,-1)
+    }
+    if (pairs[last]) {
+      return pairs[last] + word.slice(0,-1)
+    }
+    if (pairs[first]) {
+      return word.slice(1) + pairs[first]
+    }
+    return word
+  }).join(' ')
+}).join('\n')
 }
     </script>
 </body>
